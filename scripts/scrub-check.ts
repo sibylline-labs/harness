@@ -209,12 +209,13 @@ function git(...args: string[]): string {
 
 function knownShas(): Set<string> {
   const known = new Set(git("rev-list", "HEAD").split("\n").filter(Boolean));
+  // An action pin or a `<NAME>_REF:` pin in any version of a workflow names a public commit, so a
+  // superseded pin still in history is not a private SHA.
+  const PIN = /(?:\buses:\s*\S+@|#|\b[A-Z_]+_REF:\s*)([0-9a-f]{40})\b/g;
   const dir = ".github/workflows";
-  if (existsSync(dir)) {
-    for (const f of readdirSync(dir)) {
-      for (const m of readFileSync(join(dir, f), "utf8").matchAll(/(?:\buses:\s*\S+@|#|\b[A-Z_]+_REF:\s*)([0-9a-f]{40})\b/g)) known.add(m[1]!);
-    }
-  }
+  const texts = existsSync(dir) ? readdirSync(dir).map((f) => readFileSync(join(dir, f), "utf8")) : [];
+  texts.push(git("log", "-p", "--format=", "HEAD", "--", dir));
+  for (const text of texts) for (const m of text.matchAll(PIN)) known.add(m[1]!);
   return known;
 }
 
