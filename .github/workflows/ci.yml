@@ -18,7 +18,7 @@ concurrency:
 env:
   # The eris commit whose `eris skills lint` judges this tree. Bump it in the
   # same change that adopts a newer kind contract.
-  ERIS_REF: 102ed1b25cbb6fa576b88ea536656ef763ca4af5
+  ERIS_REF: 0c15902c00b557b78115d81450e1c7ee147bd921
 
 defaults:
   run:
