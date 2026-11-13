@@ -1,0 +1,9 @@
+# The `work` profiles: each is the ordered list of the stages that record a receipt. Stages with no
+# receipt (prepare-env, plan, implement) run in every profile, and so does floor-evidence: its
+# receipts are named after the class's floor requirements (revert-path, ...), which eris gate check
+# derives from the class, so it is never listed here.
+# `eris gate check --profile <p> --profiles ~/.claude/skills/work/profiles.yaml` reads this file,
+# so a run that skipped a listed gate fails closed. Keep each entry a stage row of SKILL.md, in its
+# order.
+spine: [understand-scope, premise-gate, plan-review, final-gates]
+deep: [understand-scope, premise-gate, sdk-check, plan-review, final-gates]

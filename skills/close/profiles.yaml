@@ -1,0 +1,15 @@
+# The `close` profiles: the stages that record a receipt. `terminus` is /close-out, `next` is
+# /close-next, and `tpm-merge` is /close-out run under a TPM merge grant
+# (`authorized: TPM merge <repo>#<n> <sha>`). Each profile other than `next` forbids every `next`
+# gate it does not require, so `eris gate check --profile <p>` exits 3 when a run recorded a stage
+# that is not its own: `terminus` forbids every next-only stage, and `tpm-merge` forbids the one the
+# TPM runs itself (its own /tpm pass).
+# Doctrine `close.<stage>: off` reads as the gate off: the check records the doctrine SKIPPED.
+# Keep each gate a stage row of SKILL.md.
+terminus:
+  require: [close-ledger]
+  forbid: [improvement-loop, lift-to-sdk, tpm-report]
+tpm-merge:
+  require: [improvement-loop, lift-to-sdk, close-ledger]
+  forbid: [tpm-report]
+next: [improvement-loop, lift-to-sdk, tpm-report, close-ledger]

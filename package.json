@@ -1,0 +1,14 @@
+{
+  "name": "harness",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "scrub": "bun scripts/scrub-check.ts --history",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test ./tests"
+  },
+  "devDependencies": {
+    "bun-types": "1.4.4",
+    "typescript": "^6.0.3"
+  }
+}
