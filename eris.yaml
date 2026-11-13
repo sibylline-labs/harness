@@ -1,0 +1,9 @@
+# The template's root eris.yaml: repo identity and its local CI runner.
+# It governs no keys and deploys nothing.
+kind: root
+service: harness
+repo:
+  github: harness
+ci:
+  local:
+    command: bun scripts/scrub-check.ts --history && bun test ./tests && eris skills lint .
