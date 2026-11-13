@@ -1,0 +1,5 @@
+.DS_Store
+.claude/worktrees/
+.scratch/
+data/scratch/
+node_modules/
